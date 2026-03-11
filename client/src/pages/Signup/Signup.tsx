@@ -1,4 +1,3 @@
-'use client'
 import './Signup.css'
 import { type SyntheticEvent, useState } from "react";
 import { Link } from "react-router-dom";
@@ -41,7 +40,7 @@ const Signup = () => {
                                 inputType="text"
                                 inputValue={data.email}
                                 inputPlaceholder={"john@example.com"}
-                                inputMaxLength={20}
+                                inputMaxLength={40}
                                 onChange={(e) => setData({...data, email: e.target.value})}
                             />
                         </div>

@@ -1,4 +1,3 @@
-'use client'
 import './Login.css'
 import { Link } from 'react-router-dom'
 import { type SyntheticEvent, useState } from "react";
@@ -6,7 +5,6 @@ import { useAuth } from "../../hooks/useAuth.ts";
 import Branding from "../../components/Branding/Branding.tsx";
 import InputField from "../../components/InputField/InputField.tsx";
 import SocialsButtonGrp from "../../components/SocialsButtonGrp/SocialsButtonGrp.tsx";
-
 
 const Login = () => {
     const { handleLogin } = useAuth();
@@ -27,12 +25,12 @@ const Login = () => {
             <section className='login-card-section'>
                 <div className='login-card'>
                     <div className='login-card-header'>
-                            <h1>Welcome back</h1>
-                            <p>Please enter your details to continue</p>
-                            </div>
+                        <h1>Welcome back</h1>
+                        <p>Please enter your details to continue</p>
+                    </div>
 
-                            <form
-                            onSubmit={onSubmit}
+                    <form
+                        onSubmit={onSubmit}
                         className='login-card-form'
                     >
                         <div className='input-container'>
@@ -41,7 +39,7 @@ const Login = () => {
                                 inputType="text"
                                 inputValue={data.email}
                                 inputPlaceholder={"you@example.com"}
-                                inputMaxLength={20}
+                                inputMaxLength={40}
                                 onChange={(e) => setData({...data, email: e.target.value})}
                             />
                         </div>
