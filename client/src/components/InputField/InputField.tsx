@@ -1,5 +1,5 @@
 import './InputField.css';
-import { ChangeEvent } from "react";
+import { type ChangeEvent } from "react";
 
 type InputFieldTypes = {
     inputType: string;

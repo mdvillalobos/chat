@@ -1,7 +1,9 @@
 import './ChatBox.css'
 import { useState } from "react";
+import { useChatContext } from "../../../context/chatContext.tsx";
 import { usePrivateChat } from "../../hooks/usePrivateChat.ts";
 import { useUser } from "../../../context/userContext.tsx";
+import { formatUtil } from "../../utils/formatter.ts";
 
 import { FaInfoCircle, FaUser } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
@@ -11,27 +13,21 @@ import { RiAttachment2 } from "react-icons/ri";
 import { PiMicrophoneBold } from "react-icons/pi";
 import { IoIosAdd } from "react-icons/io";
 import { IoSend } from "react-icons/io5";
-import {useChatContext} from "../../../context/chatContext.tsx";
-import {formatUtil} from "../../utils/formatter.ts";
 
 const ChatBox = () => {
     const { user } = useUser();
     const { selectedConversation } = useChatContext();
-    const { sendMessage, messages } = usePrivateChat();
+    const { messages, typingUsers, sendMessage, onInputFocusTyping } = usePrivateChat();
 
     const [ inputMessage, setInputMessage ] = useState("");
 
     const receiverUserData = selectedConversation?.receiverUser
-    const conversationId = selectedConversation?.conversationId
-
-    // const conversation = conversationId ? getConversation(conversationId) : [];
 
     const handleSend = () => {
         if (!inputMessage.trim()) return;
         sendMessage({
             recipientId: receiverUserData?._id.toString()!,
             textMessage: inputMessage,
-            conversationId: conversationId
         });
         setInputMessage("");
     };
@@ -79,7 +75,10 @@ const ChatBox = () => {
                             messages?.map((message) => {
                                 const isSendByCurrenUser = message.senderId === user?._id.toString()
                                 return (
-                                    <div className={`chat-message-container ${isSendByCurrenUser && 'self'}`}>
+                                    <div
+                                        key={message._id}
+                                        className={`chat-message-container ${isSendByCurrenUser && 'self'}`}
+                                    >
                                         <div className={`chat-message-item ${isSendByCurrenUser && 'self'}`}>
                                             {!isSendByCurrenUser && (
                                                 <div className='user-profile'>
@@ -107,7 +106,10 @@ const ChatBox = () => {
                             className='message-input-field'
                             placeholder='Type your message here.'
                             value={inputMessage}
-                            onChange={(e) => setInputMessage(e.target.value)}
+                            onChange={(e) => {
+                                onInputFocusTyping()
+                                setInputMessage(e.target.value)
+                            }}
                         />
 
                         <div className='chat-input-utils'>

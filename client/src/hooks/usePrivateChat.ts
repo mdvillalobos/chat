@@ -5,6 +5,7 @@ import { useUser } from "../../context/userContext.tsx";
 import { useChatContext } from "../../context/chatContext.tsx";
 
 type Message = {
+    _id: string;
     conversationId: string,
     senderId: string,
     text: string
@@ -21,37 +22,44 @@ type MessageResponse = {
 type MessagePayload = {
     recipientId: string,
     textMessage: string,
-    conversationId: string | undefined | null
 }
 
+type TypingMap = Record<string, boolean>;
+
 export const usePrivateChat = () => {
+    const socket = useSocket();
     const { user } = useUser()
-    const { selectedConversation, setSelectedConversation } = useChatContext()
+    const { selectedConversation, setSelectedConversation } = useChatContext();
 
     const currentUserId = user?._id;
-    const socket = useSocket();
+    const currentConversationId = selectedConversation?.conversationId
 
     const [ messages, setMessages ] = useState<Message[]>([])
+    const [ typingUsers, setTypingUsers ] = useState<TypingMap>({});
 
     useEffect(() => {
-        if (!selectedConversation?.conversationId) return;
+        if (!socket || !currentConversationId) return;
 
-        socket.emit("join-conversation", selectedConversation?.conversationId);
+        socket.emit("join-conversation", currentConversationId);
 
-        const fetchConversationMessages = async () => {
+        const fetchMessages = async () => {
             try {
                 const { data } = await axiosInstance.post('/api/chat/fetch-conversation-messages', {
-                    conversationId: selectedConversation?.conversationId
+                    conversationId: currentConversationId
                 })
 
                 setMessages(data.data)
             } catch(err) {
-                console.error(err);
+                console.error("Fetch messages error:", err);
             }
         }
 
-        fetchConversationMessages();
-    }, [selectedConversation?.conversationId, currentUserId, socket]);
+        fetchMessages();
+
+        return () => {
+            socket.emit("leave-conversation", currentConversationId);
+        };
+    }, [currentConversationId, currentUserId, socket]);
 
     useEffect(() => {
         socket.on('new-message', (data: MessageResponse) => {
@@ -70,71 +78,33 @@ export const usePrivateChat = () => {
         }
     }, [currentUserId, socket]);
 
+    useEffect(() => {
+        socket.on('user-typing', ({ userId, isTyping }) => {
+            setTypingUsers(prev => ({ ...prev, [userId]: isTyping }));
+        })
 
-    const sendMessage = useCallback(({ recipientId, textMessage, conversationId }: MessagePayload) => {
+        return () => {
+            socket.off("user-typing")
+        }
+    }, [socket]);
+
+    const sendMessage = useCallback(({ recipientId, textMessage }: MessagePayload) => {
         if(!currentUserId) return;
 
         socket.emit("send-message", {
-            conversationId,
+            currentConversationId,
             senderId: currentUserId,
             recipientId,
             textMessage
         })
     }, [currentUserId, socket])
 
+    const onInputFocusTyping = useCallback(() => {
+        socket.emit("typing", {
+            conversationId: currentConversationId,
+            isTyping: true,
+        });
+    }, [currentConversationId, socket]);
 
-
-    // const sendMessage = ({ recipientId, textMessage, conversationId }: MessagePayload) => {
-    //     socket.emit("send-message", { conversationId, senderId: currentUserId, recipientId, textMessage });
-    // };
-
-
-
-
-    // useEffect(() => {
-    //     const fetchConversationMessages = async () => {
-    //         if(!selectedConversation.conversationId) return;
-    //
-    //         try {
-    //             const data = await axiosInstance.post('/api/chat/fetch-conversation-messages', {
-    //                 conversationId: conversationId
-    //             })
-    //         } catch(err) {
-    //             console.error(err);
-    //         }
-    //     }
-    //
-    //     fetchConversationMessages()
-    // }, [selectedConversation?.conversationId]);
-
-    // useEffect(() => {
-    //     socket.emit("join-conversation", conversationId);
-    //
-    //     socket.on('new-message', (data: MessageResponse) => {
-    //         const { message, conversationId } = data
-    //         console.log(data)
-    //         setMessages((prev) => [...prev, message])
-    //     })
-    //
-    //     // socket.on('online-users', (users: string[]) => {
-    //     //     setOnlineUsers(users.filter((id) => id !== currentUserId))
-    //     // })
-    //
-    //     return () => {
-    //         socket.off("new-message");
-    //         socket.off("online-users");
-    //     };
-    // }, [currentUserId, socket]);
-    //
-    // const sendMessage = ({ recipientId, textMessage, conversationId }: MessagePayload) => {
-    //     socket.emit("send-message", { conversationId, senderId: currentUserId, recipientId, textMessage });
-    // };
-    //
-    // const filterConversationMessages = (withUserId: string) =>
-    //     messages.filter((m) =>
-    //         (m.from === currentUserId && m.to === withUserId) ||
-    //         (m.from === withUserId && m.to === currentUserId)
-    //     );
-
-    return { messages, sendMessage };
+    return { messages, typingUsers, sendMessage, onInputFocusTyping };
 }
