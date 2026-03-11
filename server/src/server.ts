@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { initSockets } from "./sockets";
+import { initSockets } from "./sockets/index.js";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
 
 import apiRoutes from './routes/apiRoutes'
