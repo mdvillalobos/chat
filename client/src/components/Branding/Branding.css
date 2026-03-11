@@ -1,0 +1,141 @@
+.brand-col {
+    flex: 0 0 auto;
+    display: flex; flex-direction: column; gap: 24px;
+    max-width: 340px;
+    animation: fadeUp 0.7s ease both;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .brand-logo-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4a90ff, #5b9fff);
+        font-size: 18px;
+        font-weight: 800;
+        font-family: 'Syne', sans-serif;
+    }
+
+    .brand-logo-text {
+        font-family: 'Syne', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+    }
+}
+
+
+.brand-tagline {
+    font-family: 'Syne', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -1px;
+
+    span {
+        font-family: 'Syne', sans-serif;
+        color: #4a90ff;
+    }
+}
+
+.brand-sub-text {
+    font-size: 14px;
+    color: #8a8a8a;
+    line-height: 1.6;
+}
+
+.chat-preview {
+    background: #1e1e1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    padding: 16px;
+    display: flex; flex-direction: column; gap: 10px;
+    max-width: 260px;
+    animation: fadeUp 0.7s 0.1s ease both;
+}
+
+.preview-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.preview-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4a90ff, #5b9fff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #fff;
+    position: relative;
+    flex-shrink: 0;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 1px;
+        right: 1px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #3dd68c;
+        border: 2px solid #1c2030;
+    }
+}
+
+.preview-name {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.preview-status {
+    font-size: 11px;
+    color: #3dd68c;
+}
+
+.preview-bubble {
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 80%;
+}
+
+.bubble-in {
+    background: #252525;
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.bubble-out {
+    background: linear-gradient(135deg, #4a90ff, #5b9fff);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+}
+
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to   {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

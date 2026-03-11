@@ -1,0 +1,176 @@
+.conversations-section {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    padding: 20px 2rem;
+    gap: 40px;
+    width: 20%;
+    border-right: 1px solid  rgba(255,255,255,0.08);
+}
+
+.conversations-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    p {
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    button {
+        font-size: 24px;
+        color: #636366;
+        cursor: pointer;
+
+        &:hover {
+            color: #f0f0f0;
+        }
+    }
+}
+
+.conversations-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.header-dropdown {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: #8a8a8a;
+    transition: 0.3s ease-in-out;
+    font-size: 14px;
+    font-weight: 600;
+
+    &:hover {
+        color: #f0f0f0;
+    }
+}
+
+.conversation-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+}
+
+.conversation-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    text-align: left;
+    background: #1e1e1e;
+    padding: 16px 18px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+        background: #262626;
+        border: 1px solid rgba(255,255,255,0.18);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+    }
+
+    &.active {
+        background-color: red;
+    }
+}
+
+.item-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex: 1;
+    width: 100%;
+
+    .profile-picture {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: red;
+        border-radius: 100%;
+        width: 46px;
+        height: 46px;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background-color: #4CAF50; /* green active color */
+            border-radius: 50%;
+            border: 2px solid white; /* creates a nice separation ring */
+        }
+    }
+}
+
+.conversation-data {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    min-width: 0;
+
+    p {
+        font-size: 16px;
+        font-weight: 600;
+        color: #e8ecf5;
+    }
+
+    span {
+        font-size: 14px;
+        color: #8a8a8a;
+        display: block;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+.notification-dot {
+    height: 12px;
+    width: 12px;
+    border-radius: 100%;
+    background-color: #4a7cff;
+}
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 8px;
+    width: 100%;
+    background: #1d1f20;
+    gap: 8px;
+
+    span {
+        font-size: 20px;
+        color: #555555;
+    }
+
+    input {
+        flex: 1;
+        outline: none;
+        padding: 4px 0;
+        font-size: 14px;
+        &::placeholder {
+            color: #555555;
+        }
+    }
+}
+
+.conversations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    margin-top: 10px;
+}

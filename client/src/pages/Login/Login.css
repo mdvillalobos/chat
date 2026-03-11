@@ -1,0 +1,539 @@
+.login-main-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    gap: 56px;
+
+    &::before {
+        content: '';
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background:
+                radial-gradient(ellipse 55% 45% at 15% 20%, rgba(74,144,255,0.07) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 55% at 85% 80%, rgba(78,205,196,0.05) 0%, transparent 65%),
+                radial-gradient(ellipse 35% 35% at 55% 50%, rgba(255,107,53,0.03) 0%, transparent 60%);
+    }
+
+    &::after {
+        content: '';
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+}
+
+.login-card-section {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeUp 0.7s 0.15s ease both;
+}
+
+.login-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    box-shadow:
+            0 32px 80px rgba(0,0,0,0.6),
+            0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+
+.login-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        color: #e8ecf5;
+    }
+
+    p {
+        font-size: 13px;
+        color: #8a8a8a;
+    }
+}
+
+.login-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #555555;
+}
+
+.login-forgot-pass-btn {
+    display: flex;
+    justify-content: flex-end;
+
+    a {
+        font-size: 13px;
+        color: #4a7cff;
+        text-decoration: none;
+        cursor: pointer;
+        transition: color 0.2s;
+        font-weight: 600;
+
+        &:hover {
+            color: #6ba3ff;
+        }
+    }
+}
+
+.login-btn {
+    background: linear-gradient(135deg, #4a90ff, #5b9fff);
+    color: #e8ecf5;
+    border: none;
+    cursor: pointer;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(74,144,255,0.20);
+
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 32px rgba(74,144,255,0.45);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideDown 0.5s ease both 0.4s;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #555555;
+    }
+
+    span {
+        font-size: 12px;
+        color: #555555;
+        white-space: nowrap;
+    }
+}
+
+.signup-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    font-size: 13px;
+    color: #8a8a8a;
+    a {
+        color: #4a90ff;
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #6ba3ff;
+        }
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to   {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/*.left {*/
+/*    flex: 1;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    padding: 48px 64px;*/
+/*    background-color: #111111;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    animation: fadeIn 0.6s ease both;*/
+
+/*    &::before {*/
+/*        content: '';*/
+/*        position: absolute;*/
+/*        top: -200px; left: -200px;*/
+/*        width: 500px; height: 500px;*/
+/*        background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);*/
+/*        pointer-events: none;*/
+/*    }*/
+
+/*    &::after {*/
+/*        content: '';*/
+/*        position: absolute;*/
+/*        bottom: -100px; right: -100px;*/
+/*        width: 400px; height: 400px;*/
+/*        background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);*/
+/*        pointer-events: none;*/
+/*    }*/
+
+/*}*/
+
+/*.login-form-area {*/
+/*    flex: 1;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    max-width: 380px;*/
+/*    margin: 0 auto;*/
+/*    width: 100%;*/
+/*    gap: 32px;*/
+/*}*/
+
+/*.login-page-header {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    animation: slideDown 0.5s ease both 0.45s;*/
+/*    h1 {*/
+/*        font-family: 'Syne', sans-serif;*/
+/*        font-size: 36px;*/
+/*        font-weight: 800;*/
+/*        letter-spacing: -1px;*/
+/*        color: #f0f0f0;*/
+/*        line-height: 1.1;*/
+/*    }*/
+
+/*    p {*/
+/*        margin-top: 8px;*/
+/*        font-size: 14px;*/
+/*        color: #555555;*/
+/*        font-weight: 300;*/
+/*    }*/
+/*}*/
+
+/*.login-form {*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 16px;*/
+/*    animation: slideDown 0.5s ease both 0.45s;*/
+/*}*/
+
+/*.input-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 8px;*/
+/*}*/
+
+/*.input-label {*/
+/*    display: block;*/
+/*    font-size: 12px;*/
+/*    font-weight: 500;*/
+/*    letter-spacing: 0.8px;*/
+/*    text-transform: uppercase;*/
+/*    color: #555555;*/
+/*}*/
+
+/*.login-forgot-pass-btn {*/
+/*    display: flex;*/
+/*    justify-content: flex-end;*/
+
+/*    a {*/
+/*        align-self: flex-end;*/
+/*        font-size: 12px;*/
+/*        color: #3b82f6;*/
+/*        text-decoration: none;*/
+/*        font-weight: 500;*/
+/*        transition: opacity 0.2s;*/
+
+/*        &:hover {*/
+/*            opacity: 0.75;*/
+/*        }*/
+/*    }*/
+/*}*/
+
+/*.submit-button {*/
+/*    width: 100%;*/
+/*    padding: 15px;*/
+/*    background-color: #3b82f6;*/
+/*    color: #fff;*/
+/*    border-radius: 12px;*/
+/*    font-family: 'Syne', sans-serif;*/
+/*    font-size: 15px;*/
+/*    font-weight: 700;*/
+/*    letter-spacing: 0.2px;*/
+/*    cursor: pointer;*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    transition: background 0.3s, box-shadow 0.2s, transform 0.15s;*/
+/*    box-shadow: 0 4px 20px rgba(59,130,246,0.3);*/
+
+/*    &:hover {*/
+/*        background: #2563eb;*/
+/*        box-shadow: 0 6px 28px rgba(59,130,246,0.5);*/
+/*        transform: translateY(-1px);*/
+/*    }*/
+/*}*/
+
+/*.divider {*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 12px;*/
+/*    animation: slideDown 0.5s ease both 0.4s;*/
+
+/*    &::before,*/
+/*    &::after {*/
+/*        content: '';*/
+/*        flex: 1;*/
+/*        height: 1px;*/
+/*        background: rgba(255,255,255,0.08);*/
+/*    }*/
+
+/*    span {*/
+/*        font-size: 12px;*/
+/*        color: #555555;*/
+/*        white-space: nowrap;*/
+/*    }*/
+/*}*/
+
+/*.socials {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    gap: 14px;*/
+/*    animation: slideDown 0.5s ease both 0.45s;*/
+/*}*/
+
+/*.socials-btn {*/
+/*    display: flex;*/
+/*    flex: 1;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    padding: 12px;*/
+/*    border: 1.5px solid rgba(255,255,255,0.08);*/
+/*    background-color: #1a1a1a;*/
+/*    border-radius: 12px;*/
+/*    cursor: pointer;*/
+/*    transition: background 0.3s, border-color 0.2s, transform 0.15s;*/
+
+/*    span {*/
+/*        font-size: 18px;*/
+
+/*        &.apple {*/
+/*           color: #fff;*/
+/*        }*/
+
+/*        &.facebook {*/
+/*            color: #1877F2;*/
+/*        }*/
+/*    }*/
+
+/*    p {*/
+/*        color: #fff;*/
+/*        font-family: 'DM Sans', sans-serif;*/
+/*        font-size: 13px;*/
+/*        font-weight: 500;*/
+/*    }*/
+
+/*    &:hover {*/
+/*        background: #222222;*/
+/*        border-color: rgba(255,255,255,0.12);*/
+/*        transform: translateY(-1px);*/
+/*    }*/
+/*}*/
+
+/*!* RIGHT PANEL *!*/
+/*.right {*/
+/*    width: 480px;*/
+/*    flex-shrink: 0;*/
+/*    background: linear-gradient(145deg, #1a1a1a 0%, #161616 50%, #111111 100%);*/
+/*    position: relative;*/
+/*    overflow: hidden;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*}*/
+
+/*.chat-scene {*/
+/*    position: relative;*/
+/*    z-index: 2;*/
+/*    animation: floatY 6s ease-in-out infinite;*/
+/*}*/
+
+/*.chat-app {*/
+/*    width: 260px;*/
+/*    height: 420px;*/
+/*    background: linear-gradient(145deg, #222, #1a1a1a);*/
+/*    border-radius: 30px;*/
+/*    border: 1.5px solid rgba(255,255,255,0.08);*/
+/*    box-shadow:*/
+/*            0 0 60px rgba(59,130,246,0.2),*/
+/*            0 40px 80px rgba(0,0,0,0.8),*/
+/*            inset 0 1px 1px rgba(255,255,255,0.05);*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    overflow: hidden;*/
+/*}*/
+
+/*.chat-header {*/
+/*    padding: 14px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    gap: 10px;*/
+/*    border-bottom: 1px solid rgba(255,255,255,0.05);*/
+/*}*/
+
+/*.avatar {*/
+/*    width: 36px;*/
+/*    height: 36px;*/
+/*    border-radius: 50%;*/
+/*    background: linear-gradient(145deg, #2563eb, #1d4ed8);*/
+/*    box-shadow: 0 0 15px rgba(59,130,246,0.6);*/
+/*}*/
+
+/*.name {*/
+/*    font-size: 14px;*/
+/*    color: #fff;*/
+/*    font-weight: 600;*/
+/*}*/
+
+/*.status {*/
+/*    font-size: 11px;*/
+/*    color: #4ade80;*/
+/*}*/
+
+/*.chat-body {*/
+/*    flex: 1;*/
+/*    padding: 14px;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 10px;*/
+/*}*/
+
+/*.message {*/
+/*    max-width: 75%;*/
+/*    padding: 8px 12px;*/
+/*    border-radius: 14px;*/
+/*    font-size: 12px;*/
+/*    animation: fadeInMsg 0.6s ease forwards;*/
+/*}*/
+
+/*.received {*/
+/*    background: #2a2a2a;*/
+/*    color: #ddd;*/
+/*    align-self: flex-start;*/
+/*}*/
+
+/*.sent {*/
+/*    background: linear-gradient(145deg, #2563eb, #1d4ed8);*/
+/*    color: #fff;*/
+/*    align-self: flex-end;*/
+/*    box-shadow: 0 0 15px rgba(59,130,246,0.5);*/
+/*}*/
+
+/*.tagline {*/
+/*    position: absolute;*/
+/*    bottom: 48px; left: 0; right: 0;*/
+/*    text-align: center;*/
+/*    z-index: 3;*/
+/*    animation: fadeIn 1s ease both 0.8s;*/
+/*}*/
+
+/*.tagline {*/
+/*    position: absolute;*/
+/*    bottom: 48px; left: 0; right: 0;*/
+/*    text-align: center;*/
+/*    z-index: 3;*/
+/*    animation: fadeIn 1s ease both 0.8s;*/
+/*}*/
+
+/*.tagline p {*/
+/*    font-family: 'Syne', sans-serif;*/
+/*    font-size: 13px;*/
+/*    font-weight: 600;*/
+/*    letter-spacing: 2px;*/
+/*    text-transform: uppercase;*/
+/*    color: rgba(99,179,237,0.5);*/
+/*}*/
+
+/*.tagline h2 {*/
+/*    font-family: 'Syne', sans-serif;*/
+/*    font-size: 28px;*/
+/*    font-weight: 800;*/
+/*    letter-spacing: -0.5px;*/
+/*    color: rgba(255,255,255,0.08);*/
+/*    margin-top: 4px;*/
+/*}*/
+
+/*@keyframes pulse {*/
+/*    from { transform: scale(1); opacity: 0.7; }*/
+/*    to   { transform: scale(1.15); opacity: 1; }*/
+/*}*/
+
+
+/*@keyframes floatY {*/
+/*    0%, 100% { transform: translateY(0) rotate(-2deg); }*/
+/*    50% { transform: translateY(-18px) rotate(-2deg); }*/
+/*}*/
+
+/*@keyframes pulseSend {*/
+/*    from { transform: scale(1); }*/
+/*    to   { transform: scale(1.1); }*/
+/*}*/
+
+/*@keyframes fadeIn {*/
+/*    from {*/
+/*        opacity: 0;*/
+/*    }*/
+/*    to {*/
+/*        opacity: 1;*/
+/*    }*/
+/*}*/
+
+/*@keyframes slideDown {*/
+/*    from {*/
+/*        opacity: 0;*/
+/*        transform: translateY(-12px);*/
+/*    }*/
+/*    to {*/
+/*        opacity: 1;*/
+/*        transform: translateY(0);*/
+/*    }*/
+/*}*/
+
+/*@keyframes fadeInMsg {*/
+/*    from { opacity: 0; transform: translateY(10px); }*/
+/*    to   { opacity: 1; transform: translateY(0); }*/
+/*}*/
+

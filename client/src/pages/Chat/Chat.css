@@ -1,0 +1,9 @@
+.chat-main-page {
+    min-height: 100dvh;
+    display: flex;
+    color: white;
+
+    > p {
+        color: white;
+    }
+}

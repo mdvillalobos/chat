@@ -1,0 +1,162 @@
+.signup-main-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    gap: 56px;
+
+    &::before {
+        content: '';
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background:
+                radial-gradient(ellipse 55% 45% at 15% 20%, rgba(74,144,255,0.07) 0%, transparent 65%),
+                radial-gradient(ellipse 45% 55% at 85% 80%, rgba(78,205,196,0.05) 0%, transparent 65%),
+                radial-gradient(ellipse 35% 35% at 55% 50%, rgba(255,107,53,0.03) 0%, transparent 60%);
+    }
+
+    &::after {
+        content: '';
+        position: fixed; inset: 0; z-index: 0; pointer-events: none;
+        background-image: radial-gradient(circle, rgba(255,255,255,0.025) 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+}
+
+
+.signup-card-section {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 420px;
+    animation: fadeUp 0.7s 0.15s ease both;
+}
+
+.signup-card {
+    background: #1e1e1e;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 28px;
+    padding: 40px 36px;
+    display: flex; flex-direction: column; gap: 28px;
+    box-shadow:
+            0 32px 80px rgba(0,0,0,0.6),
+            0 0 0 1px rgba(255,255,255,0.04) inset;
+}
+
+.signup-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.8px;
+        color: #e8ecf5;
+    }
+
+    p {
+        font-size: 13px;
+        color: #8a8a8a;
+    }
+}
+
+.signup-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #555555;
+}
+
+.signup-btn {
+    background: linear-gradient(135deg, #4a90ff, #5b9fff);
+    color: #e8ecf5;
+    border: none;
+    cursor: pointer;
+    padding: 14px;
+    border-radius: 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px rgba(74,144,255,0.20);
+
+    &:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+        box-shadow: 0 6px 32px rgba(74,144,255,0.45);;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideDown 0.5s ease both 0.4s;
+
+    &::before,
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: #555555;
+    }
+
+    span {
+        font-size: 12px;
+        color: #555555;
+        white-space: nowrap;
+    }
+}
+
+.sign-in-row {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+    font-size: 13px;
+    color: #8a8a8a;
+
+    a {
+        color: #4a90ff;
+        text-decoration: none;
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #6ba3ff;
+        }
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to   {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

@@ -1,0 +1,9 @@
+.chat-info-section {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    padding: 20px 2rem;
+    gap: 16px;
+    width: 20%;
+    background-color: #191d1e;
+}
