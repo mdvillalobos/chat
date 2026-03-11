@@ -8,6 +8,8 @@ import { Server } from "socket.io";
 import { initSockets } from "./sockets";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
 import apiRoutes from './routes/apiRoutes'
+import path from "path";
+import {fileURLToPath} from "url";
 
 dotenv.config();
 
@@ -33,6 +35,11 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', apiRoutes);
+
+app.use(express.static(path.join(__dirname, '../client/dist')));
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+});
 
 io.use(socketAuthMiddleware)
 initSockets(io)

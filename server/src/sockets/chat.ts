@@ -92,7 +92,7 @@ export const chatHandler = (socket: Socket, io: Server) => {
     socket.on("typing", ({ conversationId, isTyping }: { conversationId: string; isTyping: boolean }) => {
         if (!conversationId) return;
 
-        socket.to(conversationId).emit("user-typing", {
+        io.to(conversationId).emit("user-typing", {
             userId: socket.data.user,
             isTyping,
         });
