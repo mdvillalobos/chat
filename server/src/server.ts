@@ -5,11 +5,10 @@ import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose';
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { initSockets } from "./sockets";
+import { initSockets } from "./sockets/index";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
 import apiRoutes from './routes/apiRoutes'
 import path from "path";
-import {fileURLToPath} from "url";
 
 dotenv.config();
 
