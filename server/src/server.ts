@@ -3,12 +3,13 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
 import mongoose from 'mongoose';
+import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { initSockets } from "./sockets/index";
+import { initSockets } from "./sockets";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
+
 import apiRoutes from './routes/apiRoutes'
-import path from "path";
 
 dotenv.config();
 
