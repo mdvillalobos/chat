@@ -6,9 +6,8 @@ import mongoose from 'mongoose';
 import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { initSockets } from "./sockets/index.js";
+import { initSockets } from "./sockets";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
-
 import apiRoutes from './routes/apiRoutes'
 
 dotenv.config();
@@ -37,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', apiRoutes);
 
 app.use(express.static(path.join(__dirname, '../client/dist')));
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
 });
 
