@@ -4,7 +4,7 @@ let socket : Socket;
 
 export const getSocket = (): Socket  => {
     if(!socket) {
-        socket = io('http://localhost:3001', {
+        socket = io('https://chat-goze.onrender.com', {
             withCredentials: true,
             autoConnect: false,
         })

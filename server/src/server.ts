@@ -8,6 +8,7 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import { initSockets } from "./sockets";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
+import { fileURLToPath } from 'url';
 import apiRoutes from './routes/apiRoutes'
 
 dotenv.config();
@@ -15,16 +16,18 @@ dotenv.config();
 const app = express();
 const httpServer = createServer(app);
 
+console.log(__dirname)
+
 const io = new Server(httpServer, {
     connectionStateRecovery: {},
     cors: {
-        origin: "http://localhost:5173",
+        origin: ["https://chat-goze.onrender.com", "http://localhost:5173"],
         credentials: true,
     },
 });
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["https://chat-goze.onrender.com", "http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true,
 }))
@@ -35,9 +38,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/', apiRoutes);
 
-app.use(express.static(path.join(__dirname, '../client/dist')));
+app.use(express.static(path.join(__dirname, '../../client/dist')));
 app.use((req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+    res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
 });
 
 io.use(socketAuthMiddleware)
