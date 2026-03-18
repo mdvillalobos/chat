@@ -11,6 +11,7 @@ export class ConversationRepository {
                 path: "participants.userId",
                 select: "accountInfo.fullName accountInfo.profilePicture status"
             })
+            .limit(20)
             .lean();
     }
 

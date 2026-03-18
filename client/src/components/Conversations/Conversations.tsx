@@ -4,10 +4,10 @@ import { useDebounce} from "../../hooks/useDebounce.ts";
 import { useConversation } from "../../hooks/useConversation.ts";
 import { useUser } from "../../../context/userContext.tsx";
 import { useChatContext } from "../../../context/chatContext.tsx";
+import { formatUtil } from "../../utils/formatter.ts";
 
 import { FaUser } from "react-icons/fa";
-import { RiSearchFill } from "react-icons/ri";
-import { IoIosArrowDown } from "react-icons/io";
+import { RiSearch2Line } from "react-icons/ri";
 
 const Conversations = () => {
     const { user } = useUser();
@@ -22,20 +22,22 @@ const Conversations = () => {
 
     return (
         <section className='conversations-section'>
-            <div className='conversations-header'>
-                <p>Chats</p>
+            {/*<div>*/}
+            {/*    <p>Chat</p>*/}
 
-                <button type='button'>
-                    <RiSearchFill/>
-                </button>
-            </div>
-
-            <input
-                type='text'
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                className='bg-white text-black'
-            />
+            {/*    <button>*/}
+            {/*        */}
+            {/*    </button>*/}
+            {/*</div>*/}
+           <div className='search-input-container'>
+               <span><RiSearch2Line/></span>
+               <input
+                   type='text'
+                   placeholder='Search'
+                   value={searchInput}
+                   onChange={(e) => setSearchInput(e.target.value)}
+               />
+           </div>
 
             {searchInput ? (
                 <div className='conversation-list'>
@@ -50,7 +52,7 @@ const Conversations = () => {
                                 }}
                             >
                                 <div className='item-left'>
-                                    <div className='profile-picture'>
+                                    <div className={`profile-picture ${receivingUser.status === 'active' && 'active'}`}>
                                         <FaUser/>
                                     </div>
 
@@ -71,11 +73,6 @@ const Conversations = () => {
                 <div className='conversations-container'>
                     {conversationList.length > 0 ? (
                         <>
-                            <button className='header-dropdown'>
-                                <p>Last Messages</p>
-                                <span><IoIosArrowDown/></span>
-                            </button>
-
                             {conversationList.map((conversation: any) => {
                                 const senderData = conversation.participants.find((participant: any) => participant.userId._id.toString() === user?._id.toString());
                                 const receiverData = conversation.participants.find((participant: any) => participant.userId._id.toString() !== user?._id.toString());
@@ -89,27 +86,26 @@ const Conversations = () => {
                                             className={`conversation-item ${selectedConversation?.conversationId === conversation._id && 'active'}`}
                                             onClick={() => setSelectedConversation({ receiverUser: receiverData.userId, conversationId: conversation._id })}
                                         >
-                                            <div className='item-left'>
-                                                <div className='profile-picture'>
-                                                    <FaUser/>
-                                                </div>
-
-                                                <div className='conversation-data'>
-                                                    {conversation.messageType === 'PRIVATE' &&
-                                                        <p>{receiverData.userId.accountInfo?.fullName}</p>
-                                                    }
-
-                                                    <span>
-                                                        {conversation.lastMessage.senderId === user?._id.toString() && 'You: '}
-                                                        {conversation.lastMessage.text}
-                                                    </span>
-
-                                                </div>
+                                            <div className='profile-picture'>
+                                                <FaUser/>
                                             </div>
 
-                                            {(!senderData?.lastRead || senderData?.lastRead < conversation.updatedAt) && (
-                                                <div className='notification-dot'></div>
-                                            )}
+                                            <div className='conversation-data'>
+                                                <div className='name-container'>
+                                                    {conversation.messageType === 'PRIVATE' && (
+                                                        <p className='conversation-name'>{receiverData.userId.accountInfo?.fullName}</p>
+                                                    )}
+
+                                                    <p className='conversation-time'>{formatUtil.getTimeDifference(conversation.updatedAt)}</p>
+                                                </div>
+
+                                                <div className='text-message-container'>
+                                                    <p className='conversation-message'>
+                                                        {conversation.lastMessage.senderId === user?._id.toString() && 'You: '}
+                                                        {conversation.lastMessage.text}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </button>
                                     </div>
                                 )
@@ -119,34 +115,6 @@ const Conversations = () => {
                         <>Start a message!</>
                     )}
                 </div>
-                // <>
-                //     <div className='conversations-container'>
-                //         <button className='header-dropdown'>
-                //             <p>New Messages</p>
-                //
-                //             <span>
-                //                 <IoIosArrowDown/>
-                //             </span>
-                //         </button>
-                //
-                //         <div className='conversation-list'>
-                //             <div className='conversation-item active'>
-                //                 <div className='item-left'>
-                //                     <div className='profile-picture'>
-                //                         <FaUser/>
-                //                     </div>
-                //
-                //                     <div className='conversation-data'>
-                //                         <p>Name</p>
-                //                         <span>sadsadssdadad</span>
-                //                     </div>
-                //                 </div>
-                //
-                //                 <div className='notification-dot'></div>
-                //             </div>
-                //         </div>
-                //     </div>
-                // </>
             )}
         </section>
     )

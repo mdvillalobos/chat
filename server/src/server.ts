@@ -6,9 +6,8 @@ import mongoose from 'mongoose';
 import path from "path";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { initSockets } from "./sockets";
+import { initSockets } from "./config/index.socket";
 import { socketAuthMiddleware } from "./middleware/auth.middleware";
-import { fileURLToPath } from 'url';
 import apiRoutes from './routes/apiRoutes'
 
 dotenv.config();

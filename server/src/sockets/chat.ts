@@ -4,7 +4,6 @@ import { MessageRepository } from "../repository/message.repository";
 
 export const chatHandler = (socket: Socket, io: Server) => {
     socket.on("join-conversation", (conversationId) => {
-        console.log('joined in chat' , conversationId);
         socket.join(conversationId);
     });
 

@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -5,8 +7,34 @@
     font-family: 'DM Sans', sans-serif;
 }
 
+:root {
+    --bg-base:      #131313;
+    --bg-panel:     #131313;
+    --bg-surface:   #1a1a1a;
+    --bg-elevated:  #202020;
+    --bg-hover:     #252525;
+    --border:       rgba(255,255,255,0.06);
+    --border-light: rgba(255,255,255,0.04);
+
+    --text-primary:   #f0f0f0;
+    --text-secondary: #888888;
+    --text-muted:     #505050;
+
+    --accent:        #f07050;
+    --accent-dim:    rgba(240,112,80,0.15);
+    --accent-hover:  #f28060;
+
+    --online: #4cd97b;
+    --link:   #6ab4f5;
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+}
+
 body {
-    background-color: #0c0e10;
+    background-color: #0d0d0d;
     color: #f0f0f0;
 
     &::after {
@@ -16,7 +44,6 @@ body {
         background-size: 28px 28px;
     }
 }
-
 
 button {
     border: none;

@@ -30,6 +30,7 @@ export class AuthController {
                 .status(200)
                 .cookie("token", token, { httpOnly: true, secure: true })
                 .json({ message: "Login successfully", data: userData });
+
         } catch (error) {
             console.error(`Login error: ${error}`);
             return res.status(500).json({
@@ -39,9 +40,9 @@ export class AuthController {
     }
 
     static async register(req: Request, res: Response) {
-        const { email, password, confirmPassword } = req.body;
+        const { firstName, lastName, email, password, confirmPassword } = req.body;
 
-        if (!email || !password || !confirmPassword) {
+        if (!firstName || !lastName || !email || !password || !confirmPassword) {
             return res.status(400).json({ message: "All fields are required!" });
         }
 
@@ -55,15 +56,20 @@ export class AuthController {
 
         try {
             const hashedPassword = await hashPassword(password);
+            const accountInfo = {
+                firstName,
+                lastName,
+                fullName: `${firstName} ${lastName}`,
+            }
 
-            const newUser = await UserRepository.createUser(email, hashedPassword)
-
+            const newUser = await UserRepository.createUser( email, hashedPassword, accountInfo)
             const token = generateAuthToken(newUser._id.toString());
 
             return res
                 .status(201)
                 .cookie("token", token, { httpOnly: true, secure: true })
                 .json({ message: "Registered successfully", data: newUser });
+
         } catch (error: any) {
             if (error.code === 11000) {
                 return res.status(409).json({ message: "Email already exists" });
@@ -84,13 +90,13 @@ export class AuthController {
         }
 
         try {
-            const userInfo = {
+            const userData = {
                 firstName,
                 lastName,
                 contactNumber,
             }
 
-            const updatedUser = await UserRepository.findUserAndUpdateInfo(id, userInfo)
+            const updatedUser = await UserRepository.findUserAndUpdateInfo(id, userData)
 
             if (!updatedUser) {
                 return res.status(404).json({ message: "User not found" });

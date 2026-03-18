@@ -24,7 +24,7 @@ type MessagePayload = {
     textMessage: string,
 }
 
-type TypingMap = Record<string, boolean>;
+type TypingMap = Record<string, { isTyping: boolean }>
 
 export const usePrivateChat = () => {
     const socket = useSocket();
@@ -78,15 +78,22 @@ export const usePrivateChat = () => {
         }
     }, [currentUserId, socket]);
 
-    useEffect(() => {
-        socket.on('user-typing', ({ userId, isTyping }) => {
-            setTypingUsers(prev => ({ ...prev, [userId]: isTyping }));
-        })
-
-        return () => {
-            socket.off("user-typing")
-        }
-    }, [socket]);
+    // useEffect(() => {
+    //     socket.on("user-typing", ({ userId, isTyping }: TypingEvent) => {
+    //         setTypingUsers((prev) => {
+    //             if (isTyping) {
+    //                 if (!prev.includes(userId)) return [...prev, userId];
+    //             } else {
+    //                 return prev.filter((id) => id !== userId);
+    //             }
+    //             return prev;
+    //         });
+    //     });
+    //
+    //     return () => {
+    //         socket.off("user-typing")
+    //     }
+    // }, [socket]);
 
     const sendMessage = useCallback(({ recipientId, textMessage }: MessagePayload) => {
         if(!currentUserId) return;
@@ -99,10 +106,10 @@ export const usePrivateChat = () => {
         })
     }, [currentUserId, socket])
 
-    const onInputFocusTyping = useCallback(() => {
+    const onInputFocusTyping = useCallback((isTyping: boolean) => {
         socket.emit("typing", {
             conversationId: currentConversationId,
-            isTyping: true,
+            isTyping: isTyping,
         });
     }, [currentConversationId, socket]);
 

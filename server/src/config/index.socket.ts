@@ -1,5 +1,5 @@
 import { Server } from 'socket.io';
-import { chatHandler } from "./chat";
+import { chatHandler } from "../sockets/chat";
 
 export const initSockets = (io: Server) => {
     io.on("connection", (socket) => {

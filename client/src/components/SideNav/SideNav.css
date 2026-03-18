@@ -1,0 +1,27 @@
+.side-nav-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    padding: 20px 14px;
+    background-color: #131313;
+}
+
+.brand-logo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #6b8afd, #5b9fff);
+    font-size: 18px;
+    font-weight: 800;
+    font-family: 'Syne', sans-serif;
+}
+
+.side-nav-utils {
+    display: flex;
+    flex-direction: column;
+}

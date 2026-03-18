@@ -13,10 +13,6 @@ const UserInfoSchema = new Schema({
         type: String,
         default: null,
     },
-    contactNumber: {
-        type: String,
-        default: null
-    },
     profilePicture: {
         type: String,
         default: null

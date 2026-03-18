@@ -1,5 +1,5 @@
 import './ChatBox.css'
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { useChatContext } from "../../../context/chatContext.tsx";
 import { usePrivateChat } from "../../hooks/usePrivateChat.ts";
 import { useUser } from "../../../context/userContext.tsx";
@@ -20,8 +20,10 @@ const ChatBox = () => {
     const { messages, typingUsers, sendMessage, onInputFocusTyping } = usePrivateChat();
 
     const [ inputMessage, setInputMessage ] = useState("");
+    const [ isTyping, setTypingMessage ] = useState(false);
 
     const receiverUserData = selectedConversation?.receiverUser
+    const currentUserId = user?._id
 
     const handleSend = () => {
         if (!inputMessage.trim()) return;
@@ -30,6 +32,22 @@ const ChatBox = () => {
             textMessage: inputMessage,
         });
         setInputMessage("");
+    };
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const inputValue = e.target.value;
+        setInputMessage(inputValue);
+
+        const isUserTyping = typingUsers[user?._id.toString()!];
+
+        if(inputValue && !isUserTyping.isTyping) {
+            console.log('running')
+            onInputFocusTyping(true);
+        }
+        else if (!inputValue && isUserTyping.isTyping) {
+            console.log('runningg')
+            onInputFocusTyping(false);
+        }
     };
 
     return (
@@ -71,32 +89,39 @@ const ChatBox = () => {
                     </div>
 
                     <div className={`chat-box-body ${messages?.length > 0 ? 'has-data' : ''}`}>
-                        {messages?.length > 0 ?
-                            messages?.map((message) => {
-                                const isSendByCurrenUser = message.senderId === user?._id.toString()
-                                return (
-                                    <div
-                                        key={message._id}
-                                        className={`chat-message-container ${isSendByCurrenUser && 'self'}`}
-                                    >
-                                        <div className={`chat-message-item ${isSendByCurrenUser && 'self'}`}>
-                                            {!isSendByCurrenUser && (
-                                                <div className='user-profile'>
-                                                    {receiverUserData?.accountInfo.profilePicture
-                                                        ? <img src={receiverUserData?.accountInfo.profilePicture} alt={'Profile Picture'} />
-                                                        : <FaUser/>
-                                                    }
+                        {messages?.length > 0 ? (
+                            <>
+                                {messages?.map((message) => {
+                                    const isSendByCurrenUser = message.senderId === user?._id.toString()
+                                    return (
+                                        <div
+                                            key={message._id}
+                                            className={`chat-message-container ${isSendByCurrenUser && 'self'}`}
+                                        >
+                                            <div className={`chat-message-item ${isSendByCurrenUser && 'self'}`}>
+                                                {!isSendByCurrenUser && (
+                                                    <div className='user-profile'>
+                                                        {receiverUserData?.accountInfo.profilePicture
+                                                            ? <img src={receiverUserData?.accountInfo.profilePicture} alt={'Profile Picture'} />
+                                                            : <FaUser/>
+                                                        }
+                                                    </div>
+                                                )}
+                                                <div className={`text-message ${isSendByCurrenUser && 'self'}`}>
+                                                    <p>{message?.text}</p>
                                                 </div>
-                                            )}
-                                            <div className={`text-message ${isSendByCurrenUser && 'self'}`}>
-                                                <p>{message?.text}</p>
                                             </div>
+                                            {/*{typingUserIds.length > 0&& (*/}
+                                            {/*    <>*/}
+                                            {/*        .................*/}
+                                            {/*    </>*/}
+                                            {/*)}*/}
                                         </div>
-                                    </div>
-                                )
-                            })
-                        : (
-                            <>Start Message</>
+                                    )
+                                })}
+                            </>
+                        ) : (
+                            <p>Start Message</p>
                         )}
                     </div>
 
@@ -106,10 +131,7 @@ const ChatBox = () => {
                             className='message-input-field'
                             placeholder='Type your message here.'
                             value={inputMessage}
-                            onChange={(e) => {
-                                onInputFocusTyping()
-                                setInputMessage(e.target.value)
-                            }}
+                            onChange={(e) => onChange(e)}
                         />
 
                         <div className='chat-input-utils'>
@@ -138,9 +160,9 @@ const ChatBox = () => {
                     </div>
                 </>
             ) : (
-                <>
-                    start a conversation
-                </>
+                <p className='start-conversation-message'>
+                    Start a conversation
+                </p>
             )}
         </section>
     )

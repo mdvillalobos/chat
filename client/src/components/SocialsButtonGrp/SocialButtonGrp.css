@@ -1,3 +1,49 @@
+/*.socials-btn-grp {*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    gap: 14px;*/
+/*    animation: slideDown 0.5s ease both 0.45s;*/
+/*}*/
+
+/*.socials-btn {*/
+/*    display: flex;*/
+/*    flex: 1;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    gap: 8px;*/
+/*    padding: 12px;*/
+/*    border: 1.5px solid rgba(255,255,255,0.08);*/
+/*    background-color: #252525;*/
+/*    border-radius: 12px;*/
+/*    cursor: pointer;*/
+/*    transition: background 0.3s, border-color 0.2s, transform 0.15s;*/
+
+/*    span {*/
+/*        font-size: 18px;*/
+
+/*        &.apple {*/
+/*            color: #fff;*/
+/*        }*/
+
+/*        &.facebook {*/
+/*            color: #1877F2;*/
+/*        }*/
+/*    }*/
+
+/*    p {*/
+/*        color: #fff;*/
+/*        font-size: 13px;*/
+/*        font-weight: 500;*/
+/*    }*/
+
+/*    &:hover {*/
+/*        background: #222222;*/
+/*        border-color: rgba(255,255,255,0.12);*/
+/*        transform: translateY(-1px);*/
+/*    }*/
+/*}*/
+
+
 .socials-btn-grp {
     display: flex;
     justify-content: space-between;
@@ -18,11 +64,12 @@
     cursor: pointer;
     transition: background 0.3s, border-color 0.2s, transform 0.15s;
 
-    span {
+    > span {
+        display: flex;
         font-size: 18px;
 
         &.apple {
-            color: #fff;
+            color: #FFFFFF;
         }
 
         &.facebook {
@@ -31,8 +78,8 @@
     }
 
     p {
-        color: #fff;
-        font-size: 13px;
+        color: #FFFFFF;
+            font-size: 13px;
         font-weight: 500;
     }
 

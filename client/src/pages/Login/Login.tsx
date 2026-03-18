@@ -5,9 +5,15 @@ import { useAuth } from "../../hooks/useAuth.ts";
 import Branding from "../../components/Branding/Branding.tsx";
 import InputField from "../../components/InputField/InputField.tsx";
 import SocialsButtonGrp from "../../components/SocialsButtonGrp/SocialsButtonGrp.tsx";
+import Button from "../../components/Button/Button.tsx";
+
+import { TbEye } from "react-icons/tb";
+import { TbEyeClosed } from "react-icons/tb";
 
 const Login = () => {
     const { handleLogin } = useAuth();
+    const [ isSubmitting, setSubmitting ] = useState(false);
+    const [ isShowPassword, setIsShowPassword ] = useState(false);
     const [ data, setData ] = useState({
         email: '',
         password: ''
@@ -15,7 +21,9 @@ const Login = () => {
 
     const onSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setSubmitting(true);
         await handleLogin(data)
+        setSubmitting(false)
     }
 
     return (
@@ -36,10 +44,10 @@ const Login = () => {
                         <div className='input-container'>
                             <label className='input-label'>EMAIL ADDRESS</label>
                             <InputField
-                                inputType="text"
-                                inputValue={data.email}
-                                inputPlaceholder={"you@example.com"}
-                                inputMaxLength={40}
+                                type="text"
+                                value={data.email}
+                                placeholder={"you@example.com"}
+                                maxLength={40}
                                 onChange={(e) => setData({...data, email: e.target.value})}
                             />
                         </div>
@@ -48,11 +56,13 @@ const Login = () => {
                             <label className='input-label'>PASSWORD</label>
 
                             <InputField
-                                inputType="password"
-                                inputValue={data.password}
-                                inputPlaceholder={'Enter your password'}
-                                inputMaxLength={16}
+                                type={isShowPassword ? 'text' : 'password'}
+                                value={data.password}
+                                placeholder={'Enter your password'}
+                                maxLength={16}
                                 onChange={(e) => setData({...data, password: e.target.value})}
+                                Icon={isShowPassword ? TbEye : TbEyeClosed}
+                                IconOnClick={() => setIsShowPassword(!isShowPassword)}
                             />
                         </div>
 
@@ -62,10 +72,11 @@ const Login = () => {
                             </Link>
                         </div>
 
-                        <input
-                            type='submit'
-                            value="Login"
-                            className='login-btn'
+
+                        <Button
+                            type={'submit'}
+                            value={'Login'}
+                            isSubmitting={isSubmitting}
                         />
                     </form>
 

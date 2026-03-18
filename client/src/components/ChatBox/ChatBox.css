@@ -98,7 +98,7 @@
 .chat-message-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
 
     &.self {
         flex-direction: row-reverse;
@@ -108,8 +108,8 @@
 .text-message {
     font-size: 14px;
     padding: 10px;
-    border-radius: 20px;
-    background-color: #282a2e;
+    border-radius: 12px;
+    background-color: #252525;
 
     &.self {
         background-color: #44aef0;
@@ -175,4 +175,9 @@
     cursor: pointer;
     color: #f0f0f0;
     font-size: 22px;
+}
+
+.start-conversation-message {
+    font-size: 20px;
+    margin: auto ;
 }

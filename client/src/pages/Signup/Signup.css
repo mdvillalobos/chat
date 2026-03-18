@@ -68,8 +68,14 @@
     gap: 16px;
 }
 
+.signup-name-container {
+    display: flex;
+    gap: 14px;
+}
+
 .input-container {
     display: flex;
+    width: 100%;
     flex-direction: column;
     gap: 6px;
 }

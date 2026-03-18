@@ -2,9 +2,12 @@ import { io, Socket  } from 'socket.io-client';
 
 let socket : Socket;
 
+// 'https://chat-goze.onrender.com'
+// http://localhost:3001
+
 export const getSocket = (): Socket  => {
     if(!socket) {
-        socket = io('https://chat-goze.onrender.com', {
+        socket = io('http://localhost:3001', {
             withCredentials: true,
             autoConnect: false,
         })

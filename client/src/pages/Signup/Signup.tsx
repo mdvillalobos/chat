@@ -5,11 +5,19 @@ import { useAuth } from "../../hooks/useAuth.ts";
 import Branding from "../../components/Branding/Branding.tsx";
 import InputField from "../../components/InputField/InputField.tsx";
 import SocialsButtonGrp from "../../components/SocialsButtonGrp/SocialsButtonGrp.tsx";
+import Button from "../../components/Button/Button.tsx";
 
+import { TbEye, TbEyeClosed } from "react-icons/tb";
 
 const Signup = () => {
     const { handleSignUp } = useAuth();
+
+    const [ isShowPassword, setIsShowPassword ] = useState(false);
+    const [ isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+
     const [ data, setData ] = useState({
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -32,15 +40,39 @@ const Signup = () => {
 
                     <form
                         className='signup-card-form'
-                        onSubmit={onSubmit }
+                        onSubmit={onSubmit}
                     >
+                        <div className='signup-name-container'>
+                            <div className='input-container'>
+                                <label className='input-label'>FIRST NAME</label>
+                                <InputField
+                                    type="text"
+                                    value={data.firstName}
+                                    placeholder={"John"}
+                                    maxLength={20}
+                                    onChange={(e) => setData({...data, firstName: e.target.value})}
+                                />
+                            </div>
+
+                            <div className='input-container'>
+                                <label className='input-label'>LAST NAME</label>
+                                <InputField
+                                    type="text"
+                                    value={data.lastName}
+                                    placeholder={"Doe"}
+                                    maxLength={20}
+                                    onChange={(e) => setData({...data, lastName: e.target.value})}
+                                />
+                            </div>
+                        </div>
+
                         <div className='input-container'>
                             <label className='input-label'>EMAIL ADDRESS</label>
                             <InputField
-                                inputType="text"
-                                inputValue={data.email}
-                                inputPlaceholder={"john@example.com"}
-                                inputMaxLength={40}
+                                type="text"
+                                value={data.email}
+                                placeholder={"john@example.com"}
+                                maxLength={40}
                                 onChange={(e) => setData({...data, email: e.target.value})}
                             />
                         </div>
@@ -49,11 +81,13 @@ const Signup = () => {
                             <label className='input-label'>PASSWORD</label>
 
                             <InputField
-                                inputType="password"
-                                inputValue={data.password}
-                                inputPlaceholder={'Min. 8 characters'}
-                                inputMaxLength={16}
+                                type={isShowPassword ? 'text' : 'password'}
+                                value={data.password}
+                                placeholder={'Min. 8 characters'}
+                                maxLength={16}
                                 onChange={(e) => setData({...data, password: e.target.value})}
+                                Icon={isShowPassword ? TbEye : TbEyeClosed}
+                                IconOnClick={() => setIsShowPassword(!isShowPassword)}
                             />
                         </div>
 
@@ -61,19 +95,20 @@ const Signup = () => {
                             <label className='input-label'>PASSWORD</label>
 
                             <InputField
-                                inputType="password"
-                                inputValue={data.confirmPassword}
-                                inputPlaceholder={'Min. 8 characters'}
-                                inputMaxLength={16}
+                                type={isShowConfirmPassword ? 'text' : 'password'}
+                                value={data.confirmPassword}
+                                placeholder={'Min. 8 characters'}
+                                maxLength={16}
                                 onChange={(e) => setData({...data, confirmPassword: e.target.value})}
+                                Icon={isShowConfirmPassword ? TbEye : TbEyeClosed}
+                                IconOnClick={() => setIsShowConfirmPassword(!isShowConfirmPassword)}
                             />
                         </div>
 
 
-                        <input
-                            type='submit'
-                            value="Create Account"
-                            className='signup-btn'
+                        <Button
+                            type={'submit'}
+                            value={'Create Account'}
                         />
                     </form>
 

@@ -3,7 +3,8 @@ import axios from "axios";
 import {useUser} from "../../context/userContext.tsx";
 
 const axiosInstance = axios.create({
-    baseURL: 'https://chat-goze.onrender.com',
+    baseURL: 'http://localhost:3001',
+    // baseURL: 'https://chat-goze.onrender.com',
     headers: {
         "Content-Type": "application/json",
     },

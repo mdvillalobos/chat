@@ -1,10 +1,10 @@
-import './assets/css/App.css'
 import { Toaster } from "sileo";
 import { Route, Routes } from "react-router-dom";
 import Login from "./pages/Login/Login.tsx";
 import ProtectedRoutes from "./components/ProtectedRoutes/ProtectedRoutes.tsx";
 import Chat from "./pages/Chat/Chat.tsx"
 import Signup from "./pages/Signup/Signup.tsx";
+import ProfileRegistration from "./pages/ProfileRegistration/ProfileRegistration.tsx";
 
 const App = () => {
     return (
@@ -25,6 +25,16 @@ const App = () => {
                         <ProtectedRoutes isAuthPage={true}>
                             <Login />
                         </ProtectedRoutes>
+                    }
+                />
+
+                <Route
+                    path="/profile-registration"
+                    element={
+                        <ProfileRegistration/>
+                        // <ProtectedRoutes isAuthPage={true}>
+                        //     <Login />
+                        // </ProtectedRoutes>
                     }
                 />
 

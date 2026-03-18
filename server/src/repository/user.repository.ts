@@ -1,18 +1,19 @@
 import UserModel from "../model/user.model";
 import { Types } from "mongoose";
 
-type UserInfo = {
+type AccountInfo = {
     firstName?: string,
     lastName?: string,
-    contactNumber?: string,
+    fullName?: string
     profilePicture?: string
 }
 
 export class UserRepository {
-    static async createUser(email: string, password: string) {
+    static async createUser(email: string, password: string, accountInfo: AccountInfo) {
         return UserModel.create({
-            email,
+            email: email,
             password: password,
+            accountInfo: accountInfo,
         });
     }
 
@@ -20,7 +21,7 @@ export class UserRepository {
         return UserModel.findById(id)
     }
 
-    static async findUserAndUpdateInfo(id: string, userInfo: UserInfo) {
+    static async findUserAndUpdateInfo(id: string, userInfo: AccountInfo) {
         return UserModel.findByIdAndUpdate(
             { id },
             {
