@@ -17,8 +17,8 @@ export const chatHandler = (socket: Socket, io: Server) => {
 
         try {
             const conversation = conversationId
-                ? await ConversationRepository.findUserConversation(conversationId, senderId)
-                : await ConversationRepository.findConversationAndUpdate(senderId, recipientId);
+                ? await ConversationRepository.findUserConversationById(conversationId)
+                : await ConversationRepository.findConversationOrCreate(senderId, recipientId);
 
             if(conversationId && !conversation) {
                 return socket.emit("message-error", {
@@ -26,7 +26,8 @@ export const chatHandler = (socket: Socket, io: Server) => {
                 });
             }
 
-            const message = await MessageRepository.createMessage(conversationId, senderId, textMessage);
+            socket.join(conversation._id.toString());
+            const message = await MessageRepository.createMessage(conversation._id.toString(), senderId, textMessage);
 
             conversation.lastMessage = {
                 messageId: message._id,

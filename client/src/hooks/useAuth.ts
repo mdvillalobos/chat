@@ -81,8 +81,7 @@ export const useAuth = () => {
                 fill: "#171717",
                 styles: {
                     title: "text-white!",
-                    description: "text-white/75!",
-                },
+                 },
             });
         }
 
@@ -110,8 +109,6 @@ export const useAuth = () => {
                 firstName, lastName, email, password, confirmPassword,
             })
 
-            localStorage.setItem('authToken', data.token)
-
             sileo.success({
                 title: "Success",
                 description: data.message || "Login successful",
@@ -121,6 +118,9 @@ export const useAuth = () => {
                     description: "text-white/75!",
                 },
             });
+
+            setUser(data.data)
+            return navigate('/chat')
 
         } catch(error: any) {
             const message = error.response?.data?.message || "Something went wrong";

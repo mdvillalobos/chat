@@ -1,5 +1,4 @@
 import UserModel from "../model/user.model";
-import { Types } from "mongoose";
 
 type AccountInfo = {
     firstName?: string,
@@ -17,6 +16,10 @@ export class UserRepository {
         });
     }
 
+    static async findUserByEmail(email: string) {
+        return UserModel.findOne({ email: email });
+    }
+
     static async findUserData (id: string) {
         return UserModel.findById(id)
     }
@@ -31,10 +34,6 @@ export class UserRepository {
             },
             { new: true, fields: { password: 0 } }
         );
-    }
-
-    static async findUserByEmail(email: string) {
-        return UserModel.findOne({ email: email });
     }
 
     static async searchUserByName(currentUserId: string, userName: string) {

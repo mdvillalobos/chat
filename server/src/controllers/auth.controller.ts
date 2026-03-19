@@ -1,37 +1,30 @@
 import dotenv from "dotenv"
-import validator from 'validator'
 
 dotenv.config()
 
 import { Request, Response } from 'express';
-import { comparePassword, generateAuthToken, hashPassword } from "../helpers/auth.helpers";
 import { UserRepository } from "../repository/user.repository";
+import {AuthService} from "../services/auth.service";
 
 export class AuthController {
     static async login(req: Request, res: Response) {
         const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ error: "All fields are required" });
-        }
-
         try {
-            const userData = await UserRepository.findUserByEmail(email);
+            const { token, user } = await AuthService.login(email, password);
 
-            if (!userData || !(await comparePassword(password, userData.password))) {
+            return res
+                .status(200)
+                .cookie("token", token, { httpOnly: true, secure: true })
+                .json({ message: "Login successfully", data: user });
+
+        } catch (error) {
+            if (error.message === "INVALID_CREDENTIALS") {
                 return res.status(400).json({
                     message: "Incorrect email or password",
                 });
             }
 
-            const token = generateAuthToken(userData._id.toString());
-
-            return res
-                .status(200)
-                .cookie("token", token, { httpOnly: true, secure: true })
-                .json({ message: "Login successfully", data: userData });
-
-        } catch (error) {
             console.error(`Login error: ${error}`);
             return res.status(500).json({
                 message: "Internal server error. Please try again later",
@@ -40,44 +33,34 @@ export class AuthController {
     }
 
     static async register(req: Request, res: Response) {
-        const { firstName, lastName, email, password, confirmPassword } = req.body;
-
-        if (!firstName || !lastName || !email || !password || !confirmPassword) {
-            return res.status(400).json({ message: "All fields are required!" });
-        }
-
-        if (!validator.isEmail(email)) {
-            return res.status(400).json({ message: "Invalid email format!" });
-        }
-
-        if (password !== confirmPassword) {
-            return res.status(400).json({ message: "Passwords don't match" });
-        }
-
         try {
-            const hashedPassword = await hashPassword(password);
-            const accountInfo = {
-                firstName,
-                lastName,
-                fullName: `${firstName} ${lastName}`,
-            }
-
-            const newUser = await UserRepository.createUser( email, hashedPassword, accountInfo)
-            const token = generateAuthToken(newUser._id.toString());
+            const { token, user } = await AuthService.register(req.body);
 
             return res
                 .status(201)
                 .cookie("token", token, { httpOnly: true, secure: true })
-                .json({ message: "Registered successfully", data: newUser });
+                .json({ message: "Registered successfully", data: user });
 
         } catch (error: any) {
-            if (error.code === 11000) {
-                return res.status(409).json({ message: "Email already exists" });
+            switch (error.message) {
+                case "MISSING_FIELDS":
+                    return res.status(400).json({ message: "All fields are required!" });
+
+                case "INVALID_EMAIL":
+                    return res.status(400).json({ message: "Invalid email format!" });
+
+                case "PASSWORD_MISMATCH":
+                    return res.status(400).json({ message: "Passwords don't match" });
+
+                case "EMAIL_EXISTS":
+                    return res.status(409).json({ message: "Email already exists" });
+
+                default:
+                    console.error(`Register error: ${error}`);
+                    return res.status(500).json({
+                        message: "Internal server error. Please try again later",
+                    });
             }
-            console.error(`Register error: ${error}`);
-            return res.status(500).json({
-                message: "Internal server error. Please try again later",
-            });
         }
     }
 

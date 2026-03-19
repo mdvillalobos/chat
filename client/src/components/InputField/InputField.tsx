@@ -10,6 +10,7 @@ type InputFieldTypes = {
     Icon?: ComponentType
     IconOnClick?: () => void
 }
+
 const InputField = ({ type, value, placeholder, maxLength, onChange, Icon, IconOnClick }: InputFieldTypes) => {
     return (
         <div className='input-component-container'>

@@ -15,14 +15,22 @@ export class ConversationRepository {
             .lean();
     }
 
-    static async findUserConversation(conversationId: string, userId: string) {
-        return ConversationModel.findOne({
-            _id: conversationId,
-            "participants.userId": userId
-        });
+    static async findUserConversationById(conversationId: string) {
+        return ConversationModel.findById(conversationId);
     }
 
-    static async findConversationAndUpdate(senderId: string, recipientId: string) {
+    static async findUserConversation(senderId: string, receiverId: string) {
+        return ConversationModel.findOne({
+            participants: {
+                $all: [
+                    { $elemMatch: { userId: new Types.ObjectId(senderId) } },
+                    { $elemMatch: { userId: new Types.ObjectId(receiverId) } },
+                ]
+            }
+        })
+    }
+
+    static async findConversationOrCreate(senderId: string, recipientId: string) {
         return ConversationModel.findOneAndUpdate(
             {
                 messageType: "PRIVATE",

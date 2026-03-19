@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { sileo } from "sileo";
 import axiosInstance from "../utils/axiosUtil.ts";
 import type { User } from "../types/UserTypes.ts";
+import {useChatContext} from "../../context/chatContext.tsx";
 
 export const useConversation = () => {
+    const { selectedConversation, setSelectedConversation } = useChatContext();
+
     const searchUserAccount = (userName: string) => {
         const [ userAccountList, setUserAccountList ] = useState<User[]>([])
 
@@ -62,16 +65,18 @@ export const useConversation = () => {
         return { conversationList }
     }
 
-    const fetchUserConversation = async (receiverUser: User, senderUserId: string, setSelectedChat: any) => {
+    const fetchUserConversation = async (receiverUser: User, senderUserId: string) => {
         try {
             const { data } = await axiosInstance.post('/api/chat/get-conversation', {
-                receiverUserId: receiverUser._id,
                 senderUserId: senderUserId,
+                receiverUserId: receiverUser._id,
             });
 
-            setSelectedChat({
+            console.log(data.data)
+
+            setSelectedConversation({
                 receiverUser: receiverUser,
-                conversation: data.data
+                conversationId: data.data
             })
         } catch(error: any) {
             const message = error.response?.data?.message || "Something went wrong";
@@ -81,9 +86,9 @@ export const useConversation = () => {
                 description: message,
             });
 
-            setSelectedChat({
+            setSelectedConversation({
                 receiverUser: receiverUser,
-                conversation: null
+                conversationId: null
             })
         }
     }

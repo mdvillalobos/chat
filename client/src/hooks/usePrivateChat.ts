@@ -96,11 +96,8 @@ export const usePrivateChat = () => {
     // }, [socket]);
 
     const sendMessage = useCallback(({ recipientId, textMessage }: MessagePayload) => {
-        if(!currentUserId) return;
-
         socket.emit("send-message", {
             currentConversationId,
-            senderId: currentUserId,
             recipientId,
             textMessage
         })

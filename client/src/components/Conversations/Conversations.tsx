@@ -22,13 +22,6 @@ const Conversations = () => {
 
     return (
         <section className='conversations-section'>
-            {/*<div>*/}
-            {/*    <p>Chat</p>*/}
-
-            {/*    <button>*/}
-            {/*        */}
-            {/*    </button>*/}
-            {/*</div>*/}
            <div className='search-input-container'>
                <span><RiSearch2Line/></span>
                <input
@@ -44,22 +37,20 @@ const Conversations = () => {
                     {userAccountList.length > 0 ? (
                         userAccountList.map((receivingUser) => (
                             <button
-                                className='conversation-item active'
+                                className='conversation-item'
                                 key={receivingUser._id.toString()}
                                 onClick={() => {
-                                    fetchUserConversation(receivingUser, user?._id!, setSelectedConversation)
+                                    fetchUserConversation(receivingUser, user?._id!)
                                     setSearchInput('')
                                 }}
                             >
-                                <div className='item-left'>
-                                    <div className={`profile-picture ${receivingUser.status === 'active' && 'active'}`}>
-                                        <FaUser/>
-                                    </div>
+                                <div className='profile-picture'>
+                                    <FaUser/>
+                                </div>
 
-                                    <div className='conversation-data'>
-                                        <p>{receivingUser.accountInfo.fullName}</p>
-                                        <span>{receivingUser.status}</span>
-                                    </div>
+                                <div className='conversation-data'>
+                                    <p>{receivingUser.accountInfo.fullName}</p>
+                                    <span>{receivingUser.status}</span>
                                 </div>
                             </button>
                         ))
@@ -101,8 +92,8 @@ const Conversations = () => {
 
                                                 <div className='text-message-container'>
                                                     <p className='conversation-message'>
-                                                        {conversation.lastMessage.senderId === user?._id.toString() && 'You: '}
-                                                        {conversation.lastMessage.text}
+                                                        {conversation.lastMessage?.senderId === user?._id.toString() && 'You: '}
+                                                        {conversation.lastMessage?.text}
                                                     </p>
                                                 </div>
                                             </div>
